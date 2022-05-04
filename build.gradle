@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
     }
@@ -17,11 +16,11 @@ group = 'com.github.jtrim777'
 version = '0.1.0'
 archivesBaseName = 'metro'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'official', version: '1.18.1'
 
     runs {
         client {
@@ -85,6 +84,16 @@ repositories {
         }
     }
 
+    maven {
+        name = "Azure-SLP"
+        url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+        content {
+            it.includeModule("com.kotori316", "ScalableCatsForce".toLowerCase())
+            it.includeModule("org.typelevel", "cats-core_2.13")
+            it.includeModule("org.typelevel", "cats-kernel_2.13")
+        }
+    }
+
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     // flatDir {
     //     dir 'libs'
@@ -92,20 +101,29 @@ repositories {
 }
 
 dependencies {
+    def scala_version = "2.13.8"
+    def scala_major = "2.13"
+
     constraints {
-        implementation 'org.scala-lang:scala-library:2.13.4'
+        implementation 'org.scala-lang:scala-library:2.13.6'
     }
 
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.8'
+    minecraft 'net.minecraftforge:forge:1.18.1-39.0.5'
 
-    implementation 'org.scala-lang:scala-library:2.13.4'
+    compileOnly(group: 'org.scala-lang', name: 'scala-library', version: scala_version)
+    // Add if you need this library. I use a modified version of Cats to avoid some module errors.
+    compileOnly(group: 'org.typelevel', name: "cats-core_${scala_major}", version: '2.8.0-kotori')
 
-    implementation 'com.github.jtrim777:mc-scalacore:1.16.5-0.1.1'
+    // The language loader. You can put the jar to the mods dir instead of declaring in `build.gradle`.
+    // This file is needed as the scala library will not be loaded in dev environment due to change of classpath by Forge.
+    runtimeOnly(group: "com.kotori316", name: "ScalableCatsForce".toLowerCase(), version: "2.13.8-build-2", classifier: "with-library") {
+        transitive(false)
+    }
 
-    implementation 'net.minecraftforge:Scorge:3.1.3'
+    implementation 'com.github.jtrim777:mc-scalacore:1.18.1-0.2.1'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

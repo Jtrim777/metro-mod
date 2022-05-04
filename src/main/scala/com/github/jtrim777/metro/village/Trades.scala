@@ -3,10 +3,11 @@ package com.github.jtrim777.metro.village
 import java.util.Random
 
 import com.github.jtrim777.metro.util.SyntaxOps.I2OMapOps
-import net.minecraft.entity.Entity
-import net.minecraft.entity.merchant.villager.VillagerProfession
-import net.minecraft.entity.merchant.villager.VillagerTrades.ITrade
-import net.minecraft.item.{Item, ItemStack, Items, MerchantOffer}
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.entity.npc.VillagerTrades.ItemListing
+import net.minecraft.world.item.trading.MerchantOffer
+import net.minecraft.world.item.{Item, ItemStack, Items}
 import net.minecraftforge.event.village.VillagerTradesEvent
 
 object Trades {
@@ -15,7 +16,7 @@ object Trades {
     .level(1, purchase(Items.LEAD, 1, 4), sell(Items.LEATHER, 10))
 
   val ByProfession: Map[VillagerProfession, TradeSet] = Map(
-    VillagerProfession.MASON -> MasonTrades
+//    VillagerProfession.MASON -> MasonTrades
   )
 
   def registerTrades(events: VillagerTradesEvent): Unit = {
@@ -51,7 +52,7 @@ object Trades {
   }
 
   case class Trade(costA: ItemStack, costB: ItemStack, result: ItemStack, uses: Int,
-                   xp: Int, multx: Float) extends ITrade {
+                   xp: Int, multx: Float) extends ItemListing {
     override def getOffer(villager: Entity, randGen: Random): MerchantOffer = {
       new MerchantOffer(costA, costB, uses, xp, multx)
     }

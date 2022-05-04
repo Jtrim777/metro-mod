@@ -1,0 +1,8 @@
+[{
+  "modid" : "metro",
+  "name" : "Metro",
+  "description" : "My things",
+  "version" : "0.1.0",
+  "mcversion" : "1.18.1",
+  "authorList" : ["Jake Trimble"]
+}]
