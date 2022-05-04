@@ -20,7 +20,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'official', version: '1.18.1'
+    mappings channel: 'official', version: '1.18.2'
 
     runs {
         client {
@@ -111,7 +111,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.1-39.0.5'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
 
     compileOnly(group: 'org.scala-lang', name: 'scala-library', version: scala_version)
     // Add if you need this library. I use a modified version of Cats to avoid some module errors.
@@ -123,7 +123,7 @@ dependencies {
         transitive(false)
     }
 
-    implementation 'com.github.jtrim777:mc-scalacore:1.18.1-0.2.1'
+    implementation 'com.github.jtrim777:mc-scalacore:1.18.2-0.2.2'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
